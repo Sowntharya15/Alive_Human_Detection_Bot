@@ -1,0 +1,95 @@
+char t;
+
+void setup() {
+ pinMode(13,OUTPUT);
+ pinMode(12,OUTPUT);
+ pinMode(11,OUTPUT);
+ pinMode(10,OUTPUT);// put your setup code here, to run once:
+ 
+ Serial.begin(9600);
+}
+
+void loop() {
+ if(Serial.available()){
+  t=Serial.read();
+  Serial.print(t);
+ }// put your main code here, to run repeatedly:
+
+if(t=='1'){
+  digitalWrite(13,HIGH);
+  digitalWrite(12,LOW);
+  digitalWrite(11,HIGH);
+  digitalWrite(10,LOW); 
+ }
+else if(t=='2'){
+  digitalWrite(13,LOW);
+  digitalWrite(12,HIGH);
+  digitalWrite(11,LOW);
+  digitalWrite(10,HIGH); 
+}
+else if(t=='3'){
+  digitalWrite(13,LOW);
+  digitalWrite(12,LOW);
+  digitalWrite(11,HIGH);
+  digitalWrite(10,LOW); 
+}
+else if(t=='4'){
+  digitalWrite(13,HIGH);
+  digitalWrite(12,LOW);
+  digitalWrite(11,LOW);
+  digitalWrite(10,LOW);
+}
+else if(t=='5'){
+  digitalWrite(13,LOW);
+  digitalWrite(12,LOW);
+  digitalWrite(11,LOW);
+  digitalWrite(10,LOW);  
+}
+delay(100);
+}
+
+
+//Arduino code for IRsensor and dht11 sensor
+
+#include<dht11.h>
+#define DHT11PIN 8
+dht11 DHT11;
+int led=13;
+int temperature;
+
+int IR_sensor=9;
+int LED=12;
+
+void setup() {
+  // put your setup code here, to run once:
+Serial.begin(9600);
+pinMode(IR_sensor,INPUT);
+pinMode(LED,OUTPUT);//for ir sensor 
+pinMode(led,OUTPUT);// for dht 11
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+int chk=DHT11.read(DHT11PIN);
+Serial.println((float)DHT11.temperature);
+delay(1000);
+
+if(DHT11.temperature > 20){
+  digitalWrite(led,HIGH);
+}  
+else
+  {
+    digitalWrite(led,LOW);
+  }
+
+
+  
+int sensor_value=digitalRead(IR_sensor);
+if(sensor_value==0){
+  digitalWrite(LED,HIGH);
+}
+else{
+    digitalWrite(LED,LOW);
+  }
+}
